@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="1.0.0">
+<meta name="crystal_docs.project_name" content="logger">
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="logger">
+  <title>Logger::Severity - logger 1.0.0</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          logger
+        </a>
+      </h1>
+
+      <span class="project-version">
+        1.0.0
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="logger/Logger" data-name="logger">
+      <a href="../Logger.html">Logger</a>
+      
+        <ul>
+  
+  <li class=" " data-id="logger/Logger/Formatter" data-name="logger::formatter">
+      <a href="../Logger/Formatter.html">Formatter</a>
+      
+    </li>
+  
+  <li class=" current" data-id="logger/Logger/Severity" data-name="logger::severity">
+      <a href="../Logger/Severity.html">Severity</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">enum</span> Logger::Severity
+
+</h1>
+
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>A logger severity level.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L86" target="_blank">
+        logger.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="enum-members" class="anchor" href="#enum-members">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Enum Members
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="DEBUG">
+        <strong>DEBUG</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Low-level information for developers</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="INFO">
+        <strong>INFO</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Generic (useful) information about system operation</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="WARN">
+        <strong>WARN</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>A warning</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="ERROR">
+        <strong>ERROR</strong> = <code><span class="n">3</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>A handleable error condition</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="FATAL">
+        <strong>FATAL</strong> = <code><span class="n">4</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>An unhandleable error that results in a program crash</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="UNKNOWN">
+        <strong>UNKNOWN</strong> = <code><span class="n">5</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#debug?-instance-method" class="signature"><strong>#debug?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#error?-instance-method" class="signature"><strong>#error?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fatal?-instance-method" class="signature"><strong>#fatal?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#info?-instance-method" class="signature"><strong>#info?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unknown?-instance-method" class="signature"><strong>#unknown?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#warn?-instance-method" class="signature"><strong>#warn?</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="debug?-instance-method">
+      <div class="signature">
+        
+        def <strong>debug?</strong>
+
+        <a class="method-permalink" href="#debug?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L88" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="error?-instance-method">
+      <div class="signature">
+        
+        def <strong>error?</strong>
+
+        <a class="method-permalink" href="#error?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fatal?-instance-method">
+      <div class="signature">
+        
+        def <strong>fatal?</strong>
+
+        <a class="method-permalink" href="#fatal?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L100" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="info?-instance-method">
+      <div class="signature">
+        
+        def <strong>info?</strong>
+
+        <a class="method-permalink" href="#info?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L91" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unknown?-instance-method">
+      <div class="signature">
+        
+        def <strong>unknown?</strong>
+
+        <a class="method-permalink" href="#unknown?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L102" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="warn?-instance-method">
+      <div class="signature">
+        
+        def <strong>warn?</strong>
+
+        <a class="method-permalink" href="#warn?-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L94" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

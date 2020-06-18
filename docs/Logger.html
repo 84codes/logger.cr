@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="1.0.0">
+<meta name="crystal_docs.project_name" content="logger">
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="logger">
+  <title>Logger - logger 1.0.0</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          logger
+        </a>
+      </h1>
+
+      <span class="project-version">
+        1.0.0
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="logger/Logger" data-name="logger">
+      <a href="Logger.html">Logger</a>
+      
+        <ul>
+  
+  <li class=" " data-id="logger/Logger/Formatter" data-name="logger::formatter">
+      <a href="Logger/Formatter.html">Formatter</a>
+      
+    </li>
+  
+  <li class=" " data-id="logger/Logger/Severity" data-name="logger::severity">
+      <a href="Logger/Severity.html">Severity</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> Logger
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="Logger.html">Logger</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>The <code><a href="Logger.html">Logger</a></code> class provides a simple but sophisticated logging utility that you can use to output messages.</p>
+
+<p>The messages have associated levels, such as <code><a href="Logger.html#INFO">INFO</a></code> or <code><a href="Logger.html#ERROR">ERROR</a></code> that indicate their importance.
+You can then give the <code><a href="Logger.html">Logger</a></code> a level, and only messages at that level or higher will be printed.</p>
+
+<p>For instance, in a production system, you may have your <code><a href="Logger.html">Logger</a></code> set to <code><a href="Logger.html#INFO">INFO</a></code> or even <code><a href="Logger.html#WARN">WARN</a></code>.
+When you are developing the system, however, you probably want to know about the program’s internal state,
+and would set the <code><a href="Logger.html">Logger</a></code> to <code><a href="Logger.html#DEBUG">DEBUG</a></code>.</p>
+
+<h3><a id="example" class="anchor" href="#example">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Example</h3>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;logger&quot;</span>
+
+log <span class="o">=</span> <span class="t">Logger</span>.<span class="k">new</span>(<span class="t">STDOUT</span>)
+log.level <span class="o">=</span> <span class="t">Logger</span><span class="t">::</span><span class="t">WARN</span>
+
+<span class="c"># or</span>
+log <span class="o">=</span> <span class="t">Logger</span>.<span class="k">new</span>(<span class="t">STDOUT</span>, level: <span class="t">Logger</span><span class="t">::</span><span class="t">WARN</span>)
+
+log.debug(<span class="s">&quot;Created logger&quot;</span>)
+log.info(<span class="s">&quot;Program started&quot;</span>)
+log.warn(<span class="s">&quot;Nothing to do!&quot;</span>)
+
+<span class="k">begin</span>
+  <span class="t">File</span>.each_line(<span class="s">&quot;/foo/bar.log&quot;</span>) <span class="k">do</span> <span class="o">|</span>line<span class="o">|</span>
+    <span class="k">unless</span> line <span class="o">=~</span> <span class="s">/^(\w+) = (.*)$/</span>
+      log.error(<span class="s">&quot;Line in wrong format: </span><span class="i">#{</span>line<span class="i">}</span><span class="s">&quot;</span>)
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">rescue</span> err
+  log.fatal(<span class="s">&quot;Caught exception; exiting&quot;</span>)
+  log.fatal(err)
+<span class="k">end</span></code></pre>
+
+<p>If logging to multiple locations is required, an <code>IO::MultiWriter</code> can be
+used.</p>
+
+<pre><code>file <span class="o">=</span> <span class="t">File</span>.<span class="k">new</span>(<span class="s">&quot;production.log&quot;</span>, <span class="s">&quot;a&quot;</span>)
+writer <span class="o">=</span> <span class="t">IO</span><span class="t">::</span><span class="t">MultiWriter</span>.<span class="k">new</span>(file, <span class="t">STDOUT</span>)
+
+log <span class="o">=</span> <span class="t">Logger</span>.<span class="k">new</span>(writer)
+log.level <span class="o">=</span> <span class="t">Logger</span><span class="t">::</span><span class="t">DEBUG</span>
+log.debug(<span class="s">&quot;Created logger&quot;</span>)</code></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L48" target="_blank">
+        logger.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="DEBUG">
+        <strong>DEBUG</strong> = <code><span class="t">Severity</span><span class="t">::</span><span class="t">DEBUG</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="ERROR">
+        <strong>ERROR</strong> = <code><span class="t">Severity</span><span class="t">::</span><span class="t">ERROR</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="FATAL">
+        <strong>FATAL</strong> = <code><span class="t">Severity</span><span class="t">::</span><span class="t">FATAL</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="INFO">
+        <strong>INFO</strong> = <code><span class="t">Severity</span><span class="t">::</span><span class="t">INFO</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="UNKNOWN">
+        <strong>UNKNOWN</strong> = <code><span class="t">Severity</span><span class="t">::</span><span class="t">UNKNOWN</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="WARN">
+        <strong>WARN</strong> = <code><span class="t">Severity</span><span class="t">::</span><span class="t">WARN</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(io:IO?,level=Severity::INFO,formatter=DEFAULT_FORMATTER,progname=&quot;&quot;)-class-method" class="signature"><strong>.new</strong>(io : IO?, level = <span class="t">Severity</span><span class="t">::</span><span class="t">INFO</span>, formatter = <span class="t">DEFAULT_FORMATTER</span>, progname = <span class="s">&quot;&quot;</span>)</a>
+        
+          <div class="summary"><p>Creates a new logger that will log to the given <em>io</em>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#close-instance-method" class="signature"><strong>#close</strong></a>
+        
+          <div class="summary"><p>Calls the <em>close</em> method on the object passed to <code>initialize</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#debug(progname=nil,&)-instance-method" class="signature"><strong>#debug</strong>(progname = <span class="n">nil</span>, &)</a>
+        
+          <div class="summary"><p>Logs the message as returned from the given block if the logger's current severity is lower or equal to <code><a href="Logger.html#DEBUG">DEBUG</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#debug(message,progname=nil)-instance-method" class="signature"><strong>#debug</strong>(message, progname = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#DEBUG">DEBUG</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#debug?-instance-method" class="signature"><strong>#debug?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#DEBUG">DEBUG</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#error(progname=nil,&)-instance-method" class="signature"><strong>#error</strong>(progname = <span class="n">nil</span>, &)</a>
+        
+          <div class="summary"><p>Logs the message as returned from the given block if the logger's current severity is lower or equal to <code><a href="Logger.html#ERROR">ERROR</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#error(message,progname=nil)-instance-method" class="signature"><strong>#error</strong>(message, progname = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#ERROR">ERROR</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#error?-instance-method" class="signature"><strong>#error?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#ERROR">ERROR</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fatal(progname=nil,&)-instance-method" class="signature"><strong>#fatal</strong>(progname = <span class="n">nil</span>, &)</a>
+        
+          <div class="summary"><p>Logs the message as returned from the given block if the logger's current severity is lower or equal to <code><a href="Logger.html#FATAL">FATAL</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fatal(message,progname=nil)-instance-method" class="signature"><strong>#fatal</strong>(message, progname = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#FATAL">FATAL</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fatal?-instance-method" class="signature"><strong>#fatal?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#FATAL">FATAL</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#formatter:Logger::Severity,Time,String,String,IO-%3ENil-instance-method" class="signature"><strong>#formatter</strong> : Logger::Severity, Time, String, String, IO -> Nil</a>
+        
+          <div class="summary"><p>Customizable <code>Proc</code> (with a reasonable default) which the <code><a href="Logger.html">Logger</a></code> uses to format and print its entries.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#formatter=(formatter)-instance-method" class="signature"><strong>#formatter=</strong>(formatter)</a>
+        
+          <div class="summary"><p>Customizable <code>Proc</code> (with a reasonable default) which the <code><a href="Logger.html">Logger</a></code> uses to format and print its entries.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#info(message,progname=nil)-instance-method" class="signature"><strong>#info</strong>(message, progname = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#INFO">INFO</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#info(progname=nil,&)-instance-method" class="signature"><strong>#info</strong>(progname = <span class="n">nil</span>, &)</a>
+        
+          <div class="summary"><p>Logs the message as returned from the given block if the logger's current severity is lower or equal to <code><a href="Logger.html#INFO">INFO</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#info?-instance-method" class="signature"><strong>#info?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#INFO">INFO</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#level:Severity-instance-method" class="signature"><strong>#level</strong> : Severity</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#level=(level:Severity)-instance-method" class="signature"><strong>#level=</strong>(level : Severity)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#log(severity,message,progname=nil)-instance-method" class="signature"><strong>#log</strong>(severity, message, progname = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Logs <em>message</em> if <em>severity</em> is higher or equal with the logger's current severity.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#log(severity,progname=nil,&)-instance-method" class="signature"><strong>#log</strong>(severity, progname = <span class="n">nil</span>, &)</a>
+        
+          <div class="summary"><p>Logs the message as returned from the given block if <em>severity</em> is higher or equal with the loggers current severity.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#progname:String-instance-method" class="signature"><strong>#progname</strong> : String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#progname=(progname:String)-instance-method" class="signature"><strong>#progname=</strong>(progname : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unknown(message,progname=nil)-instance-method" class="signature"><strong>#unknown</strong>(message, progname = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#UNKNOWN">UNKNOWN</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unknown(progname=nil,&)-instance-method" class="signature"><strong>#unknown</strong>(progname = <span class="n">nil</span>, &)</a>
+        
+          <div class="summary"><p>Logs the message as returned from the given block if the logger's current severity is lower or equal to <code><a href="Logger.html#UNKNOWN">UNKNOWN</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#unknown?-instance-method" class="signature"><strong>#unknown?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#UNKNOWN">UNKNOWN</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#warn(progname=nil,&)-instance-method" class="signature"><strong>#warn</strong>(progname = <span class="n">nil</span>, &)</a>
+        
+          <div class="summary"><p>Logs the message as returned from the given block if the logger's current severity is lower or equal to <code><a href="Logger.html#WARN">WARN</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#warn(message,progname=nil)-instance-method" class="signature"><strong>#warn</strong>(message, progname = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#WARN">WARN</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#warn?-instance-method" class="signature"><strong>#warn?</strong></a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#WARN">WARN</a></code>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(io:IO?,level=Severity::INFO,formatter=DEFAULT_FORMATTER,progname=&quot;&quot;)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(io : IO?, level = <span class="t">Severity</span><span class="t">::</span><span class="t">INFO</span>, formatter = <span class="t">DEFAULT_FORMATTER</span>, progname = <span class="s">&quot;&quot;</span>)
+
+        <a class="method-permalink" href="#new(io:IO?,level=Severity::INFO,formatter=DEFAULT_FORMATTER,progname=&quot;&quot;)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new logger that will log to the given <em>io</em>.
+If <em>io</em> is <code>nil</code> then all log calls will be silently ignored.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L122" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="close-instance-method">
+      <div class="signature">
+        
+        def <strong>close</strong>
+
+        <a class="method-permalink" href="#close-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Calls the <em>close</em> method on the object passed to <code>initialize</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L128" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="debug(progname=nil,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>debug</strong>(progname = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#debug(progname=nil,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs the message as returned from the given block if the logger's current severity
+is lower or equal to <code><a href="Logger.html#DEBUG">DEBUG</a></code>. The block is not run if the severity is higher.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="debug(message,progname=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>debug</strong>(message, progname = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#debug(message,progname=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#DEBUG">DEBUG</a></code>.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="debug?-instance-method">
+      <div class="signature">
+        
+        def <strong>debug?</strong>
+
+        <a class="method-permalink" href="#debug?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#DEBUG">DEBUG</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="error(progname=nil,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>error</strong>(progname = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#error(progname=nil,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs the message as returned from the given block if the logger's current severity
+is lower or equal to <code><a href="Logger.html#ERROR">ERROR</a></code>. The block is not run if the severity is higher.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="error(message,progname=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>error</strong>(message, progname = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#error(message,progname=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#ERROR">ERROR</a></code>.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="error?-instance-method">
+      <div class="signature">
+        
+        def <strong>error?</strong>
+
+        <a class="method-permalink" href="#error?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#ERROR">ERROR</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fatal(progname=nil,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>fatal</strong>(progname = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#fatal(progname=nil,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs the message as returned from the given block if the logger's current severity
+is lower or equal to <code><a href="Logger.html#FATAL">FATAL</a></code>. The block is not run if the severity is higher.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fatal(message,progname=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>fatal</strong>(message, progname = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#fatal(message,progname=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#FATAL">FATAL</a></code>.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fatal?-instance-method">
+      <div class="signature">
+        
+        def <strong>fatal?</strong>
+
+        <a class="method-permalink" href="#fatal?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#FATAL">FATAL</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="formatter:Logger::Severity,Time,String,String,IO->Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>formatter</strong> : <a href="Logger/Severity.html">Logger::Severity</a>, Time, String, String, IO -> Nil
+
+        <a class="method-permalink" href="#formatter:Logger::Severity,Time,String,String,IO-%3ENil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Customizable <code>Proc</code> (with a reasonable default)
+which the <code><a href="Logger.html">Logger</a></code> uses to format and print its entries.</p>
+
+<p>Use this setter to provide a custom formatter.
+The <code><a href="Logger.html">Logger</a></code> will invoke it with the following arguments:</p>
+
+<ul><li>severity: a <code><a href="Logger/Severity.html">Logger::Severity</a></code></li><li>datetime: <code>Time</code>, the entry's timestamp</li><li>progname: <code>String</code>, the program name, if set when the logger was built</li><li>message: <code>String</code>, the body of a message</li><li>io: <code>IO</code>, the Logger's stream, to which you must write the final output</li></ul>
+
+<p>Example:</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;logger&quot;</span>
+
+logger <span class="o">=</span> <span class="t">Logger</span>.<span class="k">new</span>(<span class="t">STDOUT</span>)
+logger.progname <span class="o">=</span> <span class="s">&quot;YodaBot&quot;</span>
+
+logger.formatter <span class="o">=</span> <span class="t">Logger</span><span class="t">::</span><span class="t">Formatter</span>.<span class="k">new</span> <span class="k">do</span> <span class="o">|</span>severity, datetime, progname, message, io<span class="o">|</span>
+  label <span class="o">=</span> severity.unknown? ? <span class="s">&quot;ANY&quot;</span> : severity.to_s
+  io <span class="o">&lt;&lt;</span> label[<span class="n">0</span>] <span class="o">&lt;&lt;</span> <span class="s">&quot;, [&quot;</span> <span class="o">&lt;&lt;</span> datetime <span class="o">&lt;&lt;</span> <span class="s">&quot; #&quot;</span> <span class="o">&lt;&lt;</span> <span class="t">Process</span>.pid <span class="o">&lt;&lt;</span> <span class="s">&quot;] &quot;</span>
+  io <span class="o">&lt;&lt;</span> label.rjust(<span class="n">5</span>) <span class="o">&lt;&lt;</span> <span class="s">&quot; -- &quot;</span> <span class="o">&lt;&lt;</span> progname <span class="o">&lt;&lt;</span> <span class="s">&quot;: &quot;</span> <span class="o">&lt;&lt;</span> message
+<span class="k">end</span>
+
+logger.warn(<span class="s">&quot;Fear leads to anger. Anger leads to hate. Hate leads to suffering.&quot;</span>)
+
+<span class="c"># Prints to the console:</span>
+<span class="c"># &quot;W, [2017-05-06 18:00:41 -0300 #11927]  WARN --</span>
+<span class="c">#  YodaBot: Fear leads to anger. Anger leads to hate. Hate leads to suffering.&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="formatter=(formatter)-instance-method">
+      <div class="signature">
+        
+        def <strong>formatter=</strong>(formatter)
+
+        <a class="method-permalink" href="#formatter=(formatter)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Customizable <code>Proc</code> (with a reasonable default)
+which the <code><a href="Logger.html">Logger</a></code> uses to format and print its entries.</p>
+
+<p>Use this setter to provide a custom formatter.
+The <code><a href="Logger.html">Logger</a></code> will invoke it with the following arguments:</p>
+
+<ul><li>severity: a <code><a href="Logger/Severity.html">Logger::Severity</a></code></li><li>datetime: <code>Time</code>, the entry's timestamp</li><li>progname: <code>String</code>, the program name, if set when the logger was built</li><li>message: <code>String</code>, the body of a message</li><li>io: <code>IO</code>, the Logger's stream, to which you must write the final output</li></ul>
+
+<p>Example:</p>
+
+<pre><code><span class="k">require</span> <span class="s">&quot;logger&quot;</span>
+
+logger <span class="o">=</span> <span class="t">Logger</span>.<span class="k">new</span>(<span class="t">STDOUT</span>)
+logger.progname <span class="o">=</span> <span class="s">&quot;YodaBot&quot;</span>
+
+logger.formatter <span class="o">=</span> <span class="t">Logger</span><span class="t">::</span><span class="t">Formatter</span>.<span class="k">new</span> <span class="k">do</span> <span class="o">|</span>severity, datetime, progname, message, io<span class="o">|</span>
+  label <span class="o">=</span> severity.unknown? ? <span class="s">&quot;ANY&quot;</span> : severity.to_s
+  io <span class="o">&lt;&lt;</span> label[<span class="n">0</span>] <span class="o">&lt;&lt;</span> <span class="s">&quot;, [&quot;</span> <span class="o">&lt;&lt;</span> datetime <span class="o">&lt;&lt;</span> <span class="s">&quot; #&quot;</span> <span class="o">&lt;&lt;</span> <span class="t">Process</span>.pid <span class="o">&lt;&lt;</span> <span class="s">&quot;] &quot;</span>
+  io <span class="o">&lt;&lt;</span> label.rjust(<span class="n">5</span>) <span class="o">&lt;&lt;</span> <span class="s">&quot; -- &quot;</span> <span class="o">&lt;&lt;</span> progname <span class="o">&lt;&lt;</span> <span class="s">&quot;: &quot;</span> <span class="o">&lt;&lt;</span> message
+<span class="k">end</span>
+
+logger.warn(<span class="s">&quot;Fear leads to anger. Anger leads to hate. Hate leads to suffering.&quot;</span>)
+
+<span class="c"># Prints to the console:</span>
+<span class="c"># &quot;W, [2017-05-06 18:00:41 -0300 #11927]  WARN --</span>
+<span class="c">#  YodaBot: Fear leads to anger. Anger leads to hate. Hate leads to suffering.&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="info(message,progname=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>info</strong>(message, progname = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#info(message,progname=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#INFO">INFO</a></code>.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="info(progname=nil,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>info</strong>(progname = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#info(progname=nil,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs the message as returned from the given block if the logger's current severity
+is lower or equal to <code><a href="Logger.html#INFO">INFO</a></code>. The block is not run if the severity is higher.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="info?-instance-method">
+      <div class="signature">
+        
+        def <strong>info?</strong>
+
+        <a class="method-permalink" href="#info?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#INFO">INFO</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="level:Severity-instance-method">
+      <div class="signature">
+        
+        def <strong>level</strong> : <a href="Logger/Severity.html">Severity</a>
+
+        <a class="method-permalink" href="#level:Severity-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L49" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="level=(level:Severity)-instance-method">
+      <div class="signature">
+        
+        def <strong>level=</strong>(level : <a href="Logger/Severity.html">Severity</a>)
+
+        <a class="method-permalink" href="#level=(level:Severity)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L49" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="log(severity,message,progname=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>log</strong>(severity, message, progname = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#log(severity,message,progname=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs <em>message</em> if <em>severity</em> is higher or equal with the logger's current
+severity. <em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L162" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="log(severity,progname=nil,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>log</strong>(severity, progname = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#log(severity,progname=nil,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs the message as returned from the given block if <em>severity</em>
+is higher or equal with the loggers current severity. The block is not run
+if <em>severity</em> is lower. <em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L170" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="progname:String-instance-method">
+      <div class="signature">
+        
+        def <strong>progname</strong> : String
+
+        <a class="method-permalink" href="#progname:String-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L50" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="progname=(progname:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>progname=</strong>(progname : String)
+
+        <a class="method-permalink" href="#progname=(progname:String)-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L50" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unknown(message,progname=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>unknown</strong>(message, progname = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#unknown(message,progname=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#UNKNOWN">UNKNOWN</a></code>.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unknown(progname=nil,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>unknown</strong>(progname = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#unknown(progname=nil,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs the message as returned from the given block if the logger's current severity
+is lower or equal to <code><a href="Logger.html#UNKNOWN">UNKNOWN</a></code>. The block is not run if the severity is higher.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="unknown?-instance-method">
+      <div class="signature">
+        
+        def <strong>unknown?</strong>
+
+        <a class="method-permalink" href="#unknown?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#UNKNOWN">UNKNOWN</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="warn(progname=nil,&)-instance-method">
+      <div class="signature">
+        
+        def <strong>warn</strong>(progname = <span class="n">nil</span>, &)
+
+        <a class="method-permalink" href="#warn(progname=nil,&)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs the message as returned from the given block if the logger's current severity
+is lower or equal to <code><a href="Logger.html#WARN">WARN</a></code>. The block is not run if the severity is higher.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="warn(message,progname=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>warn</strong>(message, progname = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#warn(message,progname=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Logs <em>message</em> if the logger's current severity is lower or equal to <code><a href="Logger.html#WARN">WARN</a></code>.
+<em>progname</em> overrides a default progname set in this logger.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="warn?-instance-method">
+      <div class="signature">
+        
+        def <strong>warn?</strong>
+
+        <a class="method-permalink" href="#warn?-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the logger's current severity is lower or equal to <code><a href="Logger.html#WARN">WARN</a></code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/84codes/logger.cr/blob/v1.0.0/src/logger.cr#L138" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
