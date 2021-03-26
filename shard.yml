@@ -4,6 +4,6 @@ version: 1.0.0
 authors:
   - 84codes Team <team@84codes.com>
 
-crystal: 0.35.0
+crystal: ">=0.35.0"
 
 license: MIT
